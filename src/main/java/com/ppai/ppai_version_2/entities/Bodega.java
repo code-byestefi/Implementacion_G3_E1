@@ -77,10 +77,12 @@ public class Bodega {
     public ArrayList<String> getPaisRegion() {
         ArrayList<String> regionYPais = new ArrayList<>();
         String region = this.region.getNombre();
+        String provincia = this.region.getProvincia().getNombre();
         String pais = this.region.obtenerPais();
 
         regionYPais.add(region);
         regionYPais.add(pais);
+        regionYPais.add(provincia);
 
         return regionYPais;
     }

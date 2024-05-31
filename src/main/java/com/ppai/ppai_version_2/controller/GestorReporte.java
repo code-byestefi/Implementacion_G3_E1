@@ -76,6 +76,8 @@ public class GestorReporte {
                 Double precio = vinos.get(i).getPrecio();
                 ArrayList<String> infoBodega = vinos.get(i).getDatosBodega();
 
+                System.out.println("infoBodega para el vino " + nombre + ": " + infoBodega);
+
                 double promedio = vinos.get(i).calcularRanking(this.fechaDesde, this.fechaHasta);
 
                 ArrayList<Object> datosVinoSeleccionado = new ArrayList<>();
@@ -83,7 +85,6 @@ public class GestorReporte {
                 datosVinoSeleccionado.add(nombre);
                 datosVinoSeleccionado.add(precio);
                 datosVinoSeleccionado.addAll(infoBodega);
-
                 this.vinosEnElArray.add(datosVinoSeleccionado);
             }
         }

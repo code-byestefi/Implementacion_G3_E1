@@ -39,6 +39,8 @@ public class interfaces {
             row0.createCell(5).setCellValue("Bodega");
             row0.createCell(6).setCellValue("Región");
             row0.createCell(7).setCellValue("País");
+            row0.createCell(8).setCellValue("Provincia");
+
 
             for (int i = 0; i < datosVinos.size(); i++) {
                 List<Object> vino = datosVinos.get(i);
@@ -53,6 +55,7 @@ public class interfaces {
                 row1.createCell(5).setCellValue(vino.get(3).toString());
                 row1.createCell(6).setCellValue(vino.get(4).toString());
                 row1.createCell(7).setCellValue(vino.get(5).toString());
+                row1.createCell(8).setCellValue(vino.get(6).toString());
             }
 
 
