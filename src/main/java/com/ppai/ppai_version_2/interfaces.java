@@ -226,6 +226,7 @@ public class interfaces {
         }
 
         public void solicitarSelecciónFormatoReporte(GestorReporte gestor) {
+            panelBody.removeAll();
             // traigo tipos del gestor
             String[] tipoVisualizaciones = gestor.getTipoVisualizaciones();
             opciones = new JComboBox<>(tipoVisualizaciones);
