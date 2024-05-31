@@ -35,6 +35,7 @@ public class interfaces {
         private JButton btnResenia = new JButton("Aceptar");
         JComboBox<String> opciones = new JComboBox<>();
         private JButton btnTipoVisualizacion = new JButton("Aceptar");
+        private JButton btnConfirmar = new JButton("Confirmar");
 
         // fechas - campos
         private JTextField lblFechaDesde = new JTextField("01-01-2000", 20);
@@ -56,7 +57,7 @@ public class interfaces {
 
         public void habilitarVentana(GestorReporte gestor) {
             // configuro la ventana
-            setSize(500, 500);
+            setSize(400, 500);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
             setTitle("Generación de reportes de Vinos - Ranking de Calificaciones");
@@ -191,7 +192,6 @@ public class interfaces {
 
             btnTipoVisualizacion.addActionListener(e -> {
                 String tipoVisualizacion = tomarSelecciónFormatoReporte();
-                System.out.println("El tipo de Visualizacion elegido es: " + tipoVisualizacion);
                 gestor.tomarSelecciónFormatoReporte(tipoVisualizacion, this);
             });
             panelBody.revalidate();
@@ -203,17 +203,21 @@ public class interfaces {
         }
 
         public void solicitarConfirmacion(GestorReporte gestor) {
-            panelBody.add(btnAceptar);
+            panelBody.add(btnConfirmar);
             tomarConfirmacion(gestor);
+            panelBody.revalidate();
+            panelBody.repaint();
 
         }
         private void tomarConfirmacion(GestorReporte gestor) {
-            btnAceptar.addActionListener(e -> {
+            btnConfirmar.addActionListener(e -> {
                 gestor.tomarConfirmacion(this);
                 panelBody.add(lblReporteGenerado);
                 panelBody.revalidate();
                 panelBody.repaint();
             });
         }
+
+
     }
 }

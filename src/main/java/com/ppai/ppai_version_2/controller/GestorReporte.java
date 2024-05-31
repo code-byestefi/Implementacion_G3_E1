@@ -53,7 +53,18 @@ public class GestorReporte {
     public void tomarConfirmacion(interfaces.PantRankingVinos pantalla) {
         setConfirmacion(true);
     }
-    
+
+    public void buscarVinosConResenia() {
+
+    }
+    public void ordenarVinosSegunRanking() {
+
+    }
+
+    public void buscarDatosMejoresVinos() {
+        
+    }
+
     public void finCU(interfaces.PantRankingVinos pantalla) {
         pantalla.dispose();
     }
