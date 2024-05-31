@@ -13,6 +13,7 @@ public class GestorReporte {
     String[] tipoVisualizaciones = {"PDF", "Consola", "Excel"};
     private String tipoResenaSeleccionado;
     String tipoVisualizacionSeleccionado;
+    private boolean confirmacion;
 
     public void opcGenerarRankingVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos, interfaces.InterfazExcel excel){
         pantalla.solicitarSeleccionFechas(this);
@@ -49,10 +50,13 @@ public class GestorReporte {
         }
     }
 
+    public void tomarConfirmacion(interfaces.PantRankingVinos pantalla) {
+        setConfirmacion(true);
+    }
+    
     public void finCU(interfaces.PantRankingVinos pantalla) {
         pantalla.dispose();
     }
-
 
 
     public Date getFechaDesde() {
@@ -83,4 +87,11 @@ public class GestorReporte {
     public void setTipoVisualizacionSeleccionado(String tipoVisualizacionSeleccionado) {
         this.tipoVisualizacionSeleccionado = tipoVisualizacionSeleccionado;
     }
+
+
+    private void setConfirmacion(boolean confirmacion) {
+        this.confirmacion = confirmacion;
+    }
+
+
 }

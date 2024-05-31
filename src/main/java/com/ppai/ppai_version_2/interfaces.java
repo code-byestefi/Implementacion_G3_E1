@@ -42,9 +42,10 @@ public class interfaces {
         private JLabel lblTextFechaDesde = new JLabel("Fecha Desde: ");
         private JLabel lblTextFechaHasta = new JLabel("Fecha Hasta: ");
 
-        // titulos
+        // titulos o textos
         private JLabel lblOpcResenia = new JLabel("Seleccione un Tipo de Reseña: ");
         private JLabel lblVisualizacion = new JLabel("Seleccionar Tipo de Visualización: ");
+        private JLabel lblReporteGenerado = new JLabel("Reporte Generado!");
 
         // Métodos de Pantalla
         public void opcGenerarRankingVinos(GestorReporte gestor, ArrayList<Vino> vinos, InterfazExcel excel) {
@@ -201,7 +202,18 @@ public class interfaces {
             return opciones.getSelectedItem().toString();
         }
 
-        public void solicitarConfirmacion(GestorReporte gestorReporte) {
+        public void solicitarConfirmacion(GestorReporte gestor) {
+            panelBody.add(btnAceptar);
+            tomarConfirmacion(gestor);
+
+        }
+        private void tomarConfirmacion(GestorReporte gestor) {
+            btnAceptar.addActionListener(e -> {
+                gestor.tomarConfirmacion(this);
+                panelBody.add(lblReporteGenerado);
+                panelBody.revalidate();
+                panelBody.repaint();
+            });
         }
     }
 }
