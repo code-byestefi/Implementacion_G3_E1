@@ -27,9 +27,6 @@ public class GestorReporte {
         }
         ordenarVinosPorRanking();
         excel.generarExcel(this.list10MejoresVinos);
-        pantalla.mostrarGeneracionExitosa();
-
-
     }
 
     public void tomarFechas(Date fechaDesde, Date fechaHasta, interfaces.PantRankingVinos pantalla) {
@@ -63,6 +60,7 @@ public class GestorReporte {
 
     public void tomarConfirmacion(interfaces.PantRankingVinos pantalla) {
         setConfirmacion(true);
+        pantalla.mostrarGeneracionExitosa();
 
     }
 
