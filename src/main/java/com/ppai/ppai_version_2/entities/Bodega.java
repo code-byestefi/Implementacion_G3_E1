@@ -1,5 +1,7 @@
 package com.ppai.ppai_version_2.entities;
 
+import java.util.ArrayList;
+
 public class Bodega {
     //Agregar atributos
     private String nombre;
@@ -60,7 +62,26 @@ public class Bodega {
         this.periodoActualizacion = periodoActualizacion;
     }
 
+    public Region getRegion() {
+        return region;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public ArrayList<String> getPaisRegion() {
+        ArrayList<String> regionYPais = new ArrayList<>();
+        String region = this.region.getNombre();
+        String pais = this.region.obtenerPais();
+
+        regionYPais.add(region);
+        regionYPais.add(pais);
+
+        return regionYPais;
     }
 }

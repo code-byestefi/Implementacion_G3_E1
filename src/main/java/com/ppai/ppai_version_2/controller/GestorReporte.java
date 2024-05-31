@@ -1,5 +1,6 @@
 package com.ppai.ppai_version_2.controller;
 
+import com.ppai.ppai_version_2.entities.Region;
 import com.ppai.ppai_version_2.entities.Resenia;
 import com.ppai.ppai_version_2.entities.Vino;
 import com.ppai.ppai_version_2.interfaces;
@@ -73,6 +74,7 @@ public class GestorReporte {
             if (tieneResenaValidas) {
                 String nombre = vinos.get(i).getNombre();
                 Double precio = vinos.get(i).getPrecio();
+                ArrayList<String> infoBodega = vinos.get(i).getDatosBodega();
 
                 double promedio = vinos.get(i).calcularRanking(this.fechaDesde, this.fechaHasta);
 
@@ -80,13 +82,11 @@ public class GestorReporte {
                 datosVinoSeleccionado.add(promedio);
                 datosVinoSeleccionado.add(nombre);
                 datosVinoSeleccionado.add(precio);
+                datosVinoSeleccionado.addAll(infoBodega);
+
                 this.vinosEnElArray.add(datosVinoSeleccionado);
             }
         }
-/*        if (this.vinosEnElArray.isEmpty()){
-            System.out.println("No hay vions en Periodo");
-            pantalla.noHayVinosEnPeriodo();
-        }*/
     }
 
     public void ordenarVinosPorRanking(){

@@ -15,7 +15,6 @@ public class Vino {
     private ArrayList<Resenia> resenas;
     private Varietal varietal;
 
-
     //METODOS
 
     //Constructor
@@ -124,5 +123,14 @@ public class Vino {
     }
 
 
+    public ArrayList<String> getDatosBodega(){
+        ArrayList<String> lista = new ArrayList<>();
+        String nombreBodega = bodega.getNombre();
+        ArrayList<String> regionYPais = bodega.getPaisRegion();
 
+        lista.add(nombreBodega);
+        lista.addAll(regionYPais);
+
+        return lista;
+    }
 }

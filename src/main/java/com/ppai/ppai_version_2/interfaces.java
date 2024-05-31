@@ -19,7 +19,7 @@ import java.util.Date;
 public class interfaces {
     public static class InterfazExcel {
 
-        public void generarExcel(List<List<Object>> arrayDatosVinos){
+        public void generarExcel(List<List<Object>> datosVinos){
 
             Workbook workbook = new XSSFWorkbook();
 
@@ -36,9 +36,12 @@ public class interfaces {
             row0.createCell(2).setCellValue("Calificación General");
             row0.createCell(3).setCellValue("Calificación Sommelier");
             row0.createCell(4).setCellValue("Precio Sugerido");
+            row0.createCell(5).setCellValue("Bodega");
+            row0.createCell(6).setCellValue("Región");
+            row0.createCell(7).setCellValue("País");
 
-            for (int i = 0; i < arrayDatosVinos.size(); i++) {
-                List<Object> vino = arrayDatosVinos.get(i);
+            for (int i = 0; i < datosVinos.size(); i++) {
+                List<Object> vino = datosVinos.get(i);
 
                 Row row1 = sheet.createRow(i+1);
 
@@ -47,6 +50,9 @@ public class interfaces {
                 row1.createCell(2).setCellValue(7);
                 row1.createCell(3).setCellValue(vino.get(0).toString());
                 row1.createCell(4).setCellValue(vino.get(2).toString());
+                row1.createCell(5).setCellValue(vino.get(3).toString());
+                row1.createCell(6).setCellValue(vino.get(4).toString());
+                row1.createCell(7).setCellValue(vino.get(5).toString());
             }
 
 

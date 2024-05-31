@@ -10,8 +10,9 @@ public class Region {
         this.descripcion = descripcion;
     }
 
-    public Region(String string, Pais pais1) {
-        //TODO Auto-generated constructor stub
+    public Region(String nombre, Provincia provincia) {
+        this.nombre = nombre;
+        this.provincia = provincia;
     }
 
     public String getNombre() {
@@ -35,4 +36,11 @@ public class Region {
         return pais;
     }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
