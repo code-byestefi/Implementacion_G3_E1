@@ -89,7 +89,6 @@ public class interfaces {
         // titulos o textos
         private JLabel lblOpcResenia = new JLabel("Seleccione un Tipo de Reseña: ");
         private JLabel lblVisualizacion = new JLabel("Seleccionar Tipo de Visualización: ");
-        private JLabel lblReporteGenerado = new JLabel("Reporte Generado!");
         private JLabel lblGeneracionExitosa = new JLabel("Reporte Generado exitosamente!");
 
 
@@ -257,7 +256,6 @@ public class interfaces {
         private void tomarConfirmacion(GestorReporte gestor) {
             btnConfirmar.addActionListener(e -> {
                 gestor.tomarConfirmacion(this);
-                panelBody.add(lblReporteGenerado);
                 panelBody.revalidate();
                 panelBody.repaint();
                 System.out.println(gestor.getList10MejoresVinos());
