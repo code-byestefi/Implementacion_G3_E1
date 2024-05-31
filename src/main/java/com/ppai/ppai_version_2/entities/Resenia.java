@@ -8,6 +8,7 @@ public class Resenia {
     private Number puntaje;
     private Date fecha;
     private Boolean esPremium;
+    private Date fechaResena;
 
     public Resenia(String nombre, Number puntaje, Date fecha, Boolean esPremium) {
         this.nombre = nombre;
@@ -19,8 +20,8 @@ public class Resenia {
     public String getNombre() {
         return this.nombre;
     }
-    public Number getPuntaje() {
-        return this.puntaje;
+    public Double getPuntaje() {
+        return (Double) this.puntaje;
     }
     public Date getFecha() {
         return this.fecha;
@@ -30,6 +31,13 @@ public class Resenia {
     }
     public Boolean sosDeSommelier() {
         return this.esPremium; 
+    }
+
+    public boolean sosDeFecha(Date fechaDesde, Date fechaHasta){
+        if(fechaResena.after(fechaDesde) && fechaResena.before(fechaHasta)){
+            return true;
+        }
+        return false;
     }
     
 }

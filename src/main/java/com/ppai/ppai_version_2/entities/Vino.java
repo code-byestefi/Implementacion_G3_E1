@@ -2,6 +2,7 @@ package com.ppai.ppai_version_2.entities;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,18 +43,42 @@ public class Vino {
         return this.varietal;
     }
 
-    // mirar diagrama de secuencia
-    public boolean buscarVinosConResenia(Date fechaDesde, Date fechaHasta, String tipoResenia) {
-    
-        for (Resenia resenia : this.resenia) {
-            if (!resenia.getFecha().before(fechaDesde) && 
-                !resenia.getFecha().after(fechaHasta) &&  
-                resenia.getEsPremium() && tipoResenia.equals("Es premium")) {
-                return true; // El vino tiene al menos una reseña que cumple los criterios
+    public boolean buscarVinosConResenia(Date fechaDesde, Date fechaHasta) {
+        for (int i = 0; i < resenia.size(); i++){
+            boolean tenesResenasPeriodo = resenia.get(i).sosDeFecha(fechaDesde, fechaHasta);
+            boolean sosDeSommelier = resenia.get(i).sosDeSommelier();
+            if(tenesResenasPeriodo && sosDeSommelier)
+            {
+                return true;
             }
-
         }
-        return false; // El vino no tiene reseñas que cumplan los criterios
+        return false;
+    }
+
+    public double calcularRanking(Date fechaDesde, Date fechaHasta){
+        ArrayList<Double> puntajes = new ArrayList<>();
+
+        for (int i = 0; i< resenia.size(); i++){
+            boolean sosDePeriodo = resenia.get(i).sosDeFecha(fechaDesde, fechaHasta);
+            boolean sosDeSommelier = resenia.get(i).sosDeSommelier();
+            if (sosDePeriodo && sosDeSommelier){
+                puntajes.add(resenia.get(i).getPuntaje());
+            }
+        }
+        double promedio = calcularPromedio(puntajes);
+
+        return promedio;
+    }
+
+    public double calcularPromedio(ArrayList<Double> lista) {
+        if (lista == null || lista.isEmpty()) {
+            return 0;  // Retornar 0 si la lista es nula o está vacía
+        }
+        double suma = 0;
+        for (double numero : lista) {
+            suma += numero;
+        }
+        return suma / lista.size();
     }
     
     
