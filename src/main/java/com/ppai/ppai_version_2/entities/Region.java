@@ -5,10 +5,9 @@ public class Region {
     private String descripcion;
     private Provincia provincia;
 
-    public Region(String nombre, String descripcion, Provincia provincia) {
+    public Region(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.provincia = provincia;
     }
 
     public Region(String string, Pais pais1) {
@@ -21,8 +20,19 @@ public class Region {
     public String getDescripcion() {
         return this.descripcion;
     }
+
     public Provincia getProvincia() {
-        return this.provincia;
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public String obtenerPais(){
+        String pais = this.provincia.obtenerPais();
+
+        return pais;
     }
 
 }

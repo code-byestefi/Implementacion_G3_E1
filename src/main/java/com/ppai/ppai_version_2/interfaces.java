@@ -36,10 +36,6 @@ public class interfaces {
             row0.createCell(2).setCellValue("Calificación General");
             row0.createCell(3).setCellValue("Calificación Sommelier");
             row0.createCell(4).setCellValue("Precio Sugerido");
-            row0.createCell(5).setCellValue("Bodega");
-            row0.createCell(6).setCellValue("Región");
-            row0.createCell(7).setCellValue("País");
-            row0.createCell(8).setCellValue("Varietal");
 
             for (int i = 0; i < arrayDatosVinos.size(); i++) {
                 List<Object> vino = arrayDatosVinos.get(i);
@@ -51,10 +47,6 @@ public class interfaces {
                 row1.createCell(2).setCellValue(7);
                 row1.createCell(3).setCellValue(vino.get(0).toString());
                 row1.createCell(4).setCellValue(vino.get(2).toString());
-                row1.createCell(5).setCellValue(vino.get(3).toString());
-                row1.createCell(6).setCellValue(vino.get(4).toString());
-                row1.createCell(7).setCellValue(vino.get(5).toString());
-                row1.createCell(8).setCellValue(vino.get(6).toString());
             }
 
 

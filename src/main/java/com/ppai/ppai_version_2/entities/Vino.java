@@ -7,46 +7,88 @@ import java.util.Date;
 import java.util.List;
 
 public class Vino {
-    //Agregar atributos
+    private int anio;
     private String nombre;
-    private String descripcion;
-    private Varietal varietal;
+    private String notaCataBodega;
+    private double precio;
     private Bodega bodega;
-    private Double precio;
-    private List<Resenia> resenia;
+    private ArrayList<Resenia> resenas;
+    private Varietal varietal;
 
-    public Vino(String nombre, String descripcion, Varietal varietal, Bodega bodega, Double precio, List<Resenia> resenia) {
+
+    //METODOS
+
+    //Constructor
+    public Vino(int anio, String nombre, String notaCataBodega, double precio,Bodega bodega, ArrayList<Resenia> resenas, Varietal varietal) {
+        this.anio = anio;
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.varietal = varietal;
-        this.bodega = bodega;
+        this.notaCataBodega = notaCataBodega;
         this.precio = precio;
-        this.resenia = resenia;
+        this.bodega = bodega;
+        this.resenas = resenas;
+        this.varietal = varietal;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNotaCataBodega() {
+        return notaCataBodega;
+    }
+
+    public void setNotaCataBodega(String notaCataBodega) {
+        this.notaCataBodega = notaCataBodega;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public ArrayList<Resenia> getResenas() {
+        return resenas;
+    }
+
+    public void setResenas(ArrayList<Resenia> resenas) {
+        this.resenas = resenas;
     }
 
     public Bodega getBodega() {
-        return this.bodega;
+        return bodega;
     }
-    public String getDescripcion() {
-        return this.descripcion;
+
+    public void setBodega(Bodega bodega) {
+        this.bodega = bodega;
     }
-    public String getNombre() {
-        return this.nombre;
-    }
-    public Double getPrecio() {
-        return this.precio;
-    }
-    public List<Resenia> getResenia() {
-        return this.resenia;
-    }
+
     public Varietal getVarietal() {
-        return this.varietal;
+        return varietal;
+    }
+
+    public void setVarietal(Varietal varietal) {
+        this.varietal = varietal;
     }
 
     public boolean buscarVinosConResenia(Date fechaDesde, Date fechaHasta) {
-        for (int i = 0; i < resenia.size(); i++){
-            boolean tenesResenasPeriodo = resenia.get(i).sosDeFecha(fechaDesde, fechaHasta);
-            boolean sosDeSommelier = resenia.get(i).sosDeSommelier();
+        for (int i = 0; i < resenas.size(); i++){
+            boolean tenesResenasPeriodo = resenas.get(i).sosDeFecha(fechaDesde, fechaHasta);
+            boolean sosDeSommelier = resenas.get(i).sosDeSommelier();
             if(tenesResenasPeriodo && sosDeSommelier)
             {
                 return true;
@@ -58,11 +100,11 @@ public class Vino {
     public double calcularRanking(Date fechaDesde, Date fechaHasta){
         ArrayList<Double> puntajes = new ArrayList<>();
 
-        for (int i = 0; i< resenia.size(); i++){
-            boolean sosDePeriodo = resenia.get(i).sosDeFecha(fechaDesde, fechaHasta);
-            boolean sosDeSommelier = resenia.get(i).sosDeSommelier();
+        for (int i = 0; i< resenas.size(); i++){
+            boolean sosDePeriodo = resenas.get(i).sosDeFecha(fechaDesde, fechaHasta);
+            boolean sosDeSommelier = resenas.get(i).sosDeSommelier();
             if (sosDePeriodo && sosDeSommelier){
-                puntajes.add(resenia.get(i).getPuntaje());
+                puntajes.add(resenas.get(i).getPuntaje());
             }
         }
         double promedio = calcularPromedio(puntajes);
@@ -80,7 +122,7 @@ public class Vino {
         }
         return suma / lista.size();
     }
-    
-    
+
+
 
 }
