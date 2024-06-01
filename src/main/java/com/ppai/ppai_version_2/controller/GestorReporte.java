@@ -21,13 +21,12 @@ public class GestorReporte {
     private Vino[] vinosConResenia;
     List<List<Object>> list10MejoresVinos = new ArrayList<>();
 
-    public void opcGenerarRankingVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos, interfaces.InterfazExcel excel){
+    public void opcGenerarRankingVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos){
         pantalla.solicitarSeleccionFechas(this);
         if(fechaDesde != null && fechaHasta != null) {
             buscarVinosConResenia(vinos, pantalla);
         }
         ordenarVinosPorRanking();
-        excel.generarExcel(this.list10MejoresVinos);
     }
 
     public void tomarFechas(Date fechaDesde, Date fechaHasta, interfaces.PantRankingVinos pantalla) {
@@ -61,8 +60,10 @@ public class GestorReporte {
 
     public void tomarConfirmacion(interfaces.PantRankingVinos pantalla) {
         setConfirmacion(true);
+        interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
         pantalla.mostrarGeneracionExitosa();
-
+        pantalla.dispose();
+        excel.generarExcel(this.list10MejoresVinos);
     }
 
     public void buscarVinosConResenia(ArrayList<Vino> vinos, interfaces.PantRankingVinos pantalla) {

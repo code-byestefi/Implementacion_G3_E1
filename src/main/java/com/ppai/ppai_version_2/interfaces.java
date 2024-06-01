@@ -102,9 +102,9 @@ public class interfaces {
 
 
         // Métodos de Pantalla
-        public void opcGenerarRankingVinos(GestorReporte gestor, ArrayList<Vino> vinos, InterfazExcel excel) {
+        public void opcGenerarRankingVinos(GestorReporte gestor, ArrayList<Vino> vinos) {
             habilitarVentana(gestor);
-            gestor.opcGenerarRankingVinos(this, vinos, excel);
+            gestor.opcGenerarRankingVinos(this, vinos);
         }
 
         public void habilitarVentana(GestorReporte gestor) {

@@ -119,8 +119,8 @@ public class MainApplication {
         Vino vino4 = new Vino(2020, "Tesoro Nacional", "Notas de ciruela y cassis combinadas con un sutil toque de roble.", 1500.0, bodega1, resenasVino4, varietal1);
         Vino vino5 = new Vino(2023, "Merlot de la Tierra", "Aromas frescos de cereza y hierbas aromáticas.", 1300.0, bodega2, resenasVino5, varietal2);
         Vino vino6 = new Vino(2018, "El Dorado de La Rioja", "Rico en aromas de frutos del bosque con especias dulces.", 6000.0, bodega2, resenasVino6, varietal1);
-        Vino vino7 = new Vino(2020, "San Juan Selecto", "Aromas florales y frutales con un toque de cuero y tabaco.", 3000.0, bodega1, resenasVino7, varietal2);
-        Vino vino8 = new Vino(2020, "Número Ocho", "Frescos aromas de frambuesa y vainilla con un final suave.", 1500.0, bodega1, resenasVino8, varietal1);
+        Vino vino7 = new Vino(2016, "San Juan Selecto", "Aromas florales y frutales con un toque de cuero y tabaco.", 3000.0, bodega1, resenasVino7, varietal2);
+        Vino vino8 = new Vino(2018, "Número Ocho", "Frescos aromas de frambuesa y vainilla con un final suave.", 1500.0, bodega1, resenasVino8, varietal1);
         Vino vino9 = new Vino(2020, "Tinto del Gaucho", "Notas de mora y ciruela con un fondo especiado.", 1700.0, bodega2, resenasVino9, varietal2);
         Vino vino10 = new Vino(2018, "Selección Suprema", "Aromas profundos de frutas rojas y un toque de menta fresca.", 4000.0, bodega2, resenasVino10, varietal1);
         Vino vino11 = new Vino(2021, "Cóndor Andino", "Intensas notas de frutos negros y especias con un final prolongado.", 5500.0, bodega1, resenasVino11, varietal2);
@@ -261,12 +261,12 @@ public class MainApplication {
 
 
 
-        interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
+        
         interfaces.PantRankingVinos pantalla = new interfaces.PantRankingVinos();
         pantalla.setVisible(true);
 
         GestorReporte gestor = new GestorReporte();
-        pantalla.opcGenerarRankingVinos(gestor, vinos, excel);
+        pantalla.opcGenerarRankingVinos(gestor, vinos);
 
 
 
