@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JFrame;
+
 public class MainApplication {
     public static void main( String[] args ) {
 
@@ -258,8 +260,6 @@ public class MainApplication {
         vinos.add(vino23);
         vinos.add(vino24);
         vinos.add(vino25);
-
-
 
         
         interfaces.PantRankingVinos pantalla = new interfaces.PantRankingVinos();

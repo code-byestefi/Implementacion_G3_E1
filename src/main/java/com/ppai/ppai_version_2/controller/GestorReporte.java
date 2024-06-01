@@ -5,9 +5,13 @@ import com.ppai.ppai_version_2.entities.Resenia;
 import com.ppai.ppai_version_2.entities.Vino;
 import com.ppai.ppai_version_2.interfaces;
 
+import java.util.concurrent.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class GestorReporte {
 
@@ -59,12 +63,19 @@ public class GestorReporte {
     }
 
     public void tomarConfirmacion(interfaces.PantRankingVinos pantalla) {
-        setConfirmacion(true);
-        interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
-        pantalla.mostrarGeneracionExitosa();
+    setConfirmacion(true);
+    interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
+    pantalla.mostrarGeneracionExitosa();
+
+    // Utilizamos un ScheduledExecutorService para pausar durante 5 segundos
+    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    executorService.schedule(() -> {
         pantalla.dispose();
-        excel.generarExcel(this.list10MejoresVinos);
-    }
+    }, 1, TimeUnit.SECONDS);
+
+    excel.generarExcel(this.list10MejoresVinos);
+    executorService.shutdown(); // Cerramos el ScheduledExecutorService cuando terminamos de usarlo
+}
 
     public void buscarVinosConResenia(ArrayList<Vino> vinos, interfaces.PantRankingVinos pantalla) {
         ArrayList<Object> vinosEnBusqueda = new ArrayList<>();

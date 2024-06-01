@@ -75,7 +75,7 @@ public class interfaces {
     }
 
     public static class PantRankingVinos extends JFrame {
-
+        
         private final Object lock = new Object();
 
         // paneles
@@ -112,6 +112,7 @@ public class interfaces {
             frame.setSize(800, 600);
             JPanel mainPanel = new JPanel(new CardLayout());
             frame.add(mainPanel);
+            frame.setLocation(0,0);
 
             // Crear la primera pantalla con la imagen de fondo y el botón
             JPanel screen1 = new JPanel() {
@@ -126,6 +127,7 @@ public class interfaces {
             };
 
             screen1.setLayout(new GridBagLayout());
+            
 
             // Añadir el botón para cambiar a la segunda pantalla
             JButton toScreen2Button = new JButton("Generar Ranking de vinos");
@@ -154,7 +156,7 @@ public class interfaces {
             // configuro la ventana
             setSize(800, 600);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setLocationRelativeTo(null);
+            setLocation(0,0);
             setTitle("Generación de reportes de Vinos - Ranking de Calificaciones");
 
             // Configuro el primer panel
@@ -319,7 +321,9 @@ public class interfaces {
         }
 
         public void mostrarGeneracionExitosa() {
-            panelBody.add(lblGeneracionExitosa);
+            JOptionPane.showMessageDialog(panelBody, "Generación exitosa", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            setLocation(0,0);
         }
+        
     }
 }
