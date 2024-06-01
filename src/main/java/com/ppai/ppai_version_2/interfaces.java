@@ -2,6 +2,10 @@ package com.ppai.ppai_version_2;
 
 import com.ppai.ppai_version_2.controller.GestorReporte;
 import com.ppai.ppai_version_2.entities.Vino;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -103,13 +107,52 @@ public class interfaces {
 
         // Métodos de Pantalla
         public void opcGenerarRankingVinos(GestorReporte gestor, ArrayList<Vino> vinos) {
-            habilitarVentana(gestor);
+            JFrame frame = new JFrame("Generación de reportes de Vinos - Ranking de Calificaciones");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(800, 600);
+            JPanel mainPanel = new JPanel(new CardLayout());
+            frame.add(mainPanel);
+
+            // Crear la primera pantalla con la imagen de fondo y el botón
+            JPanel screen1 = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    // Cargar la imagen desde el archivo (asegúrate de tener la imagen en la ruta correcta)
+                    ImageIcon image = new ImageIcon("tp_dsi_version2\\Imagen\\Captura de pantalla 2024-05-30 224701.png");
+                    // Dibujar la imagen en el panel
+                    g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+                }
+            };
+
+            screen1.setLayout(new GridBagLayout());
+
+            // Añadir el botón para cambiar a la segunda pantalla
+            JButton toScreen2Button = new JButton("Generar Ranking de vinos");
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.insets = new Insets(50, 0, 0, 0); // Ajustar el relleno (top, left, bottom, right)
+            screen1.add(toScreen2Button, gbc);
+
+            toScreen2Button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    frame.dispose();
+                    habilitarVentana(gestor);
+                }
+            });
+
+            mainPanel.add(screen1, "Screen1");
+
+            frame.setVisible(true);
             gestor.opcGenerarRankingVinos(this, vinos);
         }
 
         public void habilitarVentana(GestorReporte gestor) {
             // configuro la ventana
-            setSize(400, 500);
+            setSize(800, 600);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
             setTitle("Generación de reportes de Vinos - Ranking de Calificaciones");
@@ -131,7 +174,7 @@ public class interfaces {
             panelTitle.add(subtitle);
 
             // Configuro el cuerpo del panel
-            panelBody.setBackground(Color.PINK);
+            panelBody.setBackground(Color.decode("#4a1b1b"));
 
             // agegro el cuerpo al primer panel
             primerPanel.add(panelBody, BorderLayout.CENTER);
@@ -153,8 +196,10 @@ public class interfaces {
         public void solicitarSeleccionFechas(GestorReporte gestor) {
             // agrego al body
             panelBody.add(lblTextFechaDesde);
+            lblTextFechaDesde.setForeground(Color.WHITE); // Establecer color de texto blanco
             panelBody.add(lblFechaDesde);
             panelBody.add(lblTextFechaHasta);
+            lblTextFechaHasta.setForeground(Color.WHITE); // Establecer color de texto blanco
             panelBody.add(lblFechaHasta);
             panelBody.add(btnAceptar);
 
@@ -217,6 +262,7 @@ public class interfaces {
             opciones = new JComboBox<>(tipoResenia);
 
             panelBody.add(lblOpcResenia);
+            lblOpcResenia.setForeground(Color.WHITE); // Establecer color de texto blanco
             panelBody.add(opciones);
             panelBody.add(btnResenia);
 
@@ -240,6 +286,7 @@ public class interfaces {
             opciones = new JComboBox<>(tipoVisualizaciones);
 
             panelBody.add(lblVisualizacion);
+            lblVisualizacion.setForeground(Color.WHITE); // Establecer color de texto blanco
             panelBody.add(opciones);
             panelBody.add(btnTipoVisualizacion);
 
