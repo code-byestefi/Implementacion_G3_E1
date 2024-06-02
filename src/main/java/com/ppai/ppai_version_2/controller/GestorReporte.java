@@ -79,30 +79,24 @@ public class GestorReporte {
 
     public void buscarVinosConResenia(ArrayList<Vino> vinos, interfaces.PantRankingVinos pantalla) {
         ArrayList<Object> vinosEnBusqueda = new ArrayList<>();
-        ArrayList<String> infoBodegas = new ArrayList<>();
         for (int i = 0; i < vinos.size(); i++) {
             Boolean tieneResenaValidas = vinos.get(i).buscarVinosConResenia(this.fechaDesde, this.fechaHasta);
 
             if (tieneResenaValidas) {
                 String nombre = vinos.get(i).getNombre();
-                Double precio = vinos.get(i).getPrecio();
-                ArrayList<String> infoBodega = vinos.get(i).getDatosBodega();
-
-                System.out.println("Info traida de Bodega para el vino " + nombre + ": " + infoBodega);
-
                 double promedio = vinos.get(i).calcularRanking(this.fechaDesde, this.fechaHasta);
 
                 ArrayList<Object> datosVinoSeleccionado = new ArrayList<>();
                 datosVinoSeleccionado.add(promedio);
                 datosVinoSeleccionado.add(nombre);
-                datosVinoSeleccionado.add(precio);
-                datosVinoSeleccionado.addAll(infoBodega);
+                datosVinoSeleccionado.add(vinos.get(i)); // Agregar objeto vino para usarlo después
+
                 this.vinosEnElArray.add(datosVinoSeleccionado);
             }
         }
     }
 
-    public void ordenarVinosPorRanking(){
+    public void ordenarVinosPorRanking() {
         Collections.sort(this.vinosEnElArray, new Comparator<List<Object>>() {
             @Override
             public int compare(List<Object> lista1, List<Object> lista2) {
@@ -112,15 +106,33 @@ public class GestorReporte {
                 // Comparar los valores
                 return valor2.compareTo(valor1); // Ordena de mayor a menor
             }
-
         });
-        buscarDatosMejoresVinos( this.vinosEnElArray.subList(0, Math.min(this.vinosEnElArray.size(), 10)));
+        buscarDatosMejoresVinos(this.vinosEnElArray.subList(0, Math.min(this.vinosEnElArray.size(), 10)));
     }
 
     private void buscarDatosMejoresVinos(List<List<Object>> list10MejoresVinos) {
-        this.list10MejoresVinos = list10MejoresVinos;
+        this.list10MejoresVinos = new ArrayList<>();
 
-    };
+        for (List<Object> datosVino : list10MejoresVinos) {
+            double promedio = (double) datosVino.get(0);
+            String nombre = (String) datosVino.get(1);
+            Vino vino = (Vino) datosVino.get(2);
+
+            double precio = vino.getPrecio();
+            ArrayList<String> infoBodega = vino.getDatosBodega();
+            System.out.println("Info traida de Bodega para el vino " + nombre + ": " + infoBodega);
+
+            ArrayList<Object> datosVinoCompletos = new ArrayList<>();
+            datosVinoCompletos.add(promedio);
+            datosVinoCompletos.add(nombre);
+            datosVinoCompletos.add(precio);
+            datosVinoCompletos.addAll(infoBodega);
+
+            this.list10MejoresVinos.add(datosVinoCompletos);
+        }
+    }
+
+
 
     public void finCU(interfaces.PantRankingVinos pantalla) {
         pantalla.dispose();
