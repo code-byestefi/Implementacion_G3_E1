@@ -106,7 +106,7 @@ public class interfaces {
 
 
         // Métodos de Pantalla
-        public void opcGenerarRankingVinos(GestorReporte gestor, ArrayList<Vino> vinos) {
+        public void opcionGenerarRankingDeVinos(GestorReporte gestor, ArrayList<Vino> vinos) {
             JFrame frame = new JFrame("Generación de reportes de Vinos - Ranking de Calificaciones");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 600);
@@ -142,17 +142,17 @@ public class interfaces {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     frame.dispose();
-                    habilitarVentana(gestor);
+                    habilitarPantalla(gestor);
                 }
             });
 
             mainPanel.add(screen1, "Screen1");
 
             frame.setVisible(true);
-            gestor.opcGenerarRankingVinos(this, vinos);
+            gestor.generarRankingDeVinos(this, vinos);
         }
 
-        public void habilitarVentana(GestorReporte gestor) {
+        public void habilitarPantalla(GestorReporte gestor) {
             // configuro la ventana
             setSize(800, 600);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -207,7 +207,7 @@ public class interfaces {
 
             btnAceptar.addActionListener(e -> {
                 Date fechaDesde = tomarFechaDesde();
-                Date fechaHasta = tomarSelFechaHasta();
+                Date fechaHasta = tomarFechaHasta();
                 boolean validate = validarPeriodo(fechaDesde, fechaHasta);
 
                 gestor.tomarFechas(fechaDesde, fechaHasta, this);
@@ -236,7 +236,7 @@ public class interfaces {
             }
         }
 
-        public Date tomarSelFechaHasta() {
+        public Date tomarFechaHasta() {
             String fechaTexto = lblFechaHasta.getText();
             SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
             try {
@@ -312,12 +312,10 @@ public class interfaces {
 
         }
         private void tomarConfirmacion(GestorReporte gestor) {
-            btnConfirmar.addActionListener(e -> {
-                gestor.tomarConfirmacion(this);
-                panelBody.revalidate();
-                panelBody.repaint();
-                System.out.println(gestor.getList10MejoresVinos());
-            });
+            JOptionPane pane = new JOptionPane("¿Estás seguro de que deseas generar el reporte?", JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+            JDialog dialog = pane.createDialog(panelBody, "Confirmar Generación de Reporte");
+            dialog.setVisible(true);
+            gestor.tomarConfirmacion(this);
         }
 
         public void mostrarGeneracionExitosa() {

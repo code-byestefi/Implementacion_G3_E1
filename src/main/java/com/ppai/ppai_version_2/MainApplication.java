@@ -184,7 +184,7 @@ public class MainApplication {
         Resenia resena8 = new Resenia("Fresco y afrutado, perfecto para una tarde de verano.", true, fecha6, 8.9, vino4);
         Resenia resena9 = new Resenia("Rico en especias y con una estructura firme.", true, fecha9, 9.0, vino5);
         Resenia resena10 = new Resenia("Delicadamente floral con una textura sedosa.", true, fecha4, 8.8, vino6);
-        Resenia resena11 = new Resenia("Aromas intensos de cereza y un toque de chocolate.", true, fecha1, 7.4, vino7);
+        Resenia resena11 = new Resenia("Aromas intensos de cereza y un toque de chocolate.", true, fecha2, 7.4, vino7);
         Resenia resena12 = new Resenia("Equilibrio entre fruta y madera, muy bien logrado.", true, fecha4, 7.8, vino8);
         Resenia resena13 = new Resenia("Elegante y sofisticado, con un toque de mineralidad.", true, fecha6, 9.1, vino9);
         Resenia resena14 = new Resenia("Ligero y refrescante, aunque un poco simple.", true, fecha4, 6.0, vino10);
@@ -298,7 +298,7 @@ public class MainApplication {
         pantalla.setVisible(true);
 
         GestorReporte gestor = new GestorReporte();
-        pantalla.opcGenerarRankingVinos(gestor, vinos);
+        pantalla.opcionGenerarRankingDeVinos(gestor, vinos);
 
 
 

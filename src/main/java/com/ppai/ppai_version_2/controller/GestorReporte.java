@@ -25,7 +25,7 @@ public class GestorReporte {
     private Vino[] vinosConResenia;
     List<List<Object>> list10MejoresVinos = new ArrayList<>();
 
-    public void opcGenerarRankingVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos){
+    public void generarRankingDeVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos){
         pantalla.solicitarSeleccionFechas(this);
         if(fechaDesde != null && fechaHasta != null) {
             buscarVinosConResenia(vinos, pantalla);
