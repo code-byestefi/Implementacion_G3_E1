@@ -25,13 +25,16 @@ public class GestorReporte {
     private boolean confirmacion;
     private Vino[] vinosConResenia;
     List<List<Object>> list10MejoresVinos = new ArrayList<>();
+    private ArrayList<Vino> vinos;
 
     public void generarRankingDeVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos){
+        this.vinos = vinos;
         pantalla.solicitarSeleccionFechas(this); // solicitamos las fechas
-        if(fechaDesde != null && fechaHasta != null) {
+        //
+/*        if(fechaDesde != null && fechaHasta != null) {
             buscarVinosConResenia(vinos, pantalla);
         }
-        ordenarVinosPorRanking();
+        ordenarVinosPorRanking();*/
     }
 
     public void tomarFechas(Date fechaDesde, Date fechaHasta, interfaces.PantRankingVinos pantalla) {
@@ -63,31 +66,38 @@ public class GestorReporte {
     }
 
     public void tomarConfirmacion(interfaces.PantRankingVinos pantalla) {
-    setConfirmacion(true);
-    interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
-    pantalla.mostrarGeneracionExitosa();
-    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-    executorService.schedule(() -> {
-        pantalla.dispose();
-    }, 1, TimeUnit.SECONDS);
+        setConfirmacion(true);
 
-    excel.generarExcel(this.list10MejoresVinos);
-    executorService.shutdown(); // C
-}
+        // Ejecutar búsqueda de vinos con reseñas y ordenarlos
+        buscarVinosConResenia(this.vinos, pantalla);
+        ordenarVinosPorRanking();
 
-    public void buscarVinosConResenia(ArrayList<Vino> vinos, interfaces.PantRankingVinos pantalla) {
-        ArrayList<Object> vinosEnBusqueda = new ArrayList<>();
-        for (int i = 0; i < vinos.size(); i++) {
-            Boolean tieneResenaValidas = vinos.get(i).buscarVinosConResenia(this.fechaDesde, this.fechaHasta);
+        // Generar el Excel con los datos ordenados
+        interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
+        pantalla.mostrarGeneracionExitosa();
+
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(() -> {
+            pantalla.dispose();
+        }, 1, TimeUnit.SECONDS);
+
+        excel.generarExcel(this.list10MejoresVinos);
+        executorService.shutdown();
+    }
+
+    public void buscarVinosConResenia(List<Vino> vinos, interfaces.PantRankingVinos pantalla) {
+        vinosEnElArray.clear();
+        for (Vino vino : vinos) {
+            Boolean tieneResenaValidas = vino.buscarVinosConResenia(this.fechaDesde, this.fechaHasta);
 
             if (tieneResenaValidas) {
-                String nombre = vinos.get(i).getNombre();
-                double promedio = vinos.get(i).calcularRanking(this.fechaDesde, this.fechaHasta);
+                String nombre = vino.getNombre(); // solicitamos el nombre
+                double promedio = vino.calcularRanking(this.fechaDesde, this.fechaHasta); // calculamos Ranking
 
                 ArrayList<Object> datosVinoSeleccionado = new ArrayList<>();
                 datosVinoSeleccionado.add(promedio);
                 datosVinoSeleccionado.add(nombre);
-                datosVinoSeleccionado.add(vinos.get(i)); // Agregar objeto vino para usarlo después
+                datosVinoSeleccionado.add(vino);
 
                 this.vinosEnElArray.add(datosVinoSeleccionado);
             }
@@ -105,6 +115,7 @@ public class GestorReporte {
         });
         buscarDatosMejoresVinos(this.vinosEnElArray.subList(0, Math.min(this.vinosEnElArray.size(), 10)));
     }
+
 
     private void buscarDatosMejoresVinos(List<List<Object>> list10MejoresVinos) {
         this.list10MejoresVinos = new ArrayList<>();
