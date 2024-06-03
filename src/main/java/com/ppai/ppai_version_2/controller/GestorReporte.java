@@ -28,13 +28,8 @@ public class GestorReporte {
     private ArrayList<Vino> vinos;
 
     public void generarRankingDeVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos){
-        this.vinos = vinos;
+        this.vinos = vinos; // guardamos la instancia de vinos
         pantalla.solicitarSeleccionFechas(this); // solicitamos las fechas
-        //
-/*        if(fechaDesde != null && fechaHasta != null) {
-            buscarVinosConResenia(vinos, pantalla);
-        }
-        ordenarVinosPorRanking();*/
     }
 
     public void tomarFechas(Date fechaDesde, Date fechaHasta, interfaces.PantRankingVinos pantalla) {
@@ -73,7 +68,7 @@ public class GestorReporte {
         ordenarVinosPorRanking();
 
         // Generar el Excel con los datos ordenados
-        interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
+        interfaces.InterfazExcel excel = new interfaces.InterfazExcel(); // instancia
         pantalla.mostrarGeneracionExitosa();
 
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -81,7 +76,7 @@ public class GestorReporte {
             pantalla.dispose();
         }, 1, TimeUnit.SECONDS);
 
-        excel.generarExcel(this.list10MejoresVinos);
+        excel.generarExcel(this.list10MejoresVinos); // se genera el excel. Se usa la interfaz
         executorService.shutdown();
     }
 

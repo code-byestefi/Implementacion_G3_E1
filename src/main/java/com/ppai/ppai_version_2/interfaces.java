@@ -333,19 +333,19 @@ public class interfaces {
 
             btnTipoVisualizacion.addActionListener(e -> {
                 String tipoVisualizacion = tomarSelecciónFormatoReporte(); // tomar las seleccion
-                gestor.tomarSelecciónFormatoReporte(tipoVisualizacion, this);
+                gestor.tomarSelecciónFormatoReporte(tipoVisualizacion, this); // pasar al gestor
             });
             panelBody.revalidate();
             panelBody.repaint();
         }
 
         private String tomarSelecciónFormatoReporte() {
-            return opciones.getSelectedItem().toString();
+            return opciones.getSelectedItem().toString(); // se toma la seleccion
         }
 
         public void solicitarConfirmacion(GestorReporte gestor) {
             panelBody.add(btnConfirmar);
-            tomarConfirmacion(gestor);
+            tomarConfirmacion(gestor); // se toma confirmación
             panelBody.revalidate();
             panelBody.repaint();
 
