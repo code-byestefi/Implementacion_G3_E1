@@ -33,7 +33,6 @@ public class interfaces {
 
             Workbook workbook = new XSSFWorkbook();
 
-
             Sheet sheet = workbook.createSheet("excel-sheet");
             for (int i = 0; i < 9; i++) {
                 sheet.setColumnWidth(i, 5000);
@@ -258,9 +257,9 @@ public class interfaces {
                 Date fechaDesde = tomarFechaDesde(); // tomamos fechaDesde
                 Date fechaHasta = tomarFechaHasta(); // tomamos fechaHasta
 
-                gestor.tomarFechas(fechaDesde, fechaHasta, this); // tomamos fechas al gestor
-
                 boolean validate = validarPeriodo(fechaDesde, fechaHasta); // validamos periodo
+
+                gestor.tomarFechas(fechaDesde, fechaHasta, this); // tomamos fechas al gestor
 
                 synchronized (lock) {
                     lock.notify();
