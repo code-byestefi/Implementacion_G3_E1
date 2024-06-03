@@ -17,7 +17,8 @@ public class GestorReporte {
 
     Date fechaDesde;
     Date fechaHasta;
-    String[] tipoVisualizaciones = {"PDF", "Consola", "Excel"};
+    String[] tipoVisualizaciones = {"PDF", "Consola", "Excel"}; // tipos de formatos
+    String[] tipoResenia = {"Premium", "No Premium"};
     private String tipoResenaSeleccionado;
     String tipoVisualizacionSeleccionado;
     List<List<Object>> vinosEnElArray = new ArrayList<>();
@@ -26,7 +27,7 @@ public class GestorReporte {
     List<List<Object>> list10MejoresVinos = new ArrayList<>();
 
     public void generarRankingDeVinos(interfaces.PantRankingVinos pantalla, ArrayList<Vino> vinos){
-        pantalla.solicitarSeleccionFechas(this);
+        pantalla.solicitarSeleccionFechas(this); // solicitamos las fechas
         if(fechaDesde != null && fechaHasta != null) {
             buscarVinosConResenia(vinos, pantalla);
         }
@@ -37,7 +38,6 @@ public class GestorReporte {
         setFechaDesde(fechaDesde);
         setFechaHasta(fechaHasta);
 
-        //Llamada a la pantalla para que muestre los tipos de reseñas
         if (fechaDesde != null && fechaHasta != null){
             pantalla.solicitarSeleccionTipoReseña(this);
 
@@ -66,15 +66,13 @@ public class GestorReporte {
     setConfirmacion(true);
     interfaces.InterfazExcel excel = new interfaces.InterfazExcel();
     pantalla.mostrarGeneracionExitosa();
-
-    // Utilizamos un ScheduledExecutorService para pausar durante 5 segundos
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     executorService.schedule(() -> {
         pantalla.dispose();
     }, 1, TimeUnit.SECONDS);
 
     excel.generarExcel(this.list10MejoresVinos);
-    executorService.shutdown(); // Cerramos el ScheduledExecutorService cuando terminamos de usarlo
+    executorService.shutdown(); // C
 }
 
     public void buscarVinosConResenia(ArrayList<Vino> vinos, interfaces.PantRankingVinos pantalla) {
@@ -100,10 +98,8 @@ public class GestorReporte {
         Collections.sort(this.vinosEnElArray, new Comparator<List<Object>>() {
             @Override
             public int compare(List<Object> lista1, List<Object> lista2) {
-                // Convertir el primer elemento de cada sublista a Double para comparar
                 Double valor1 = (Double) lista1.get(0);
                 Double valor2 = (Double) lista2.get(0);
-                // Comparar los valores
                 return valor2.compareTo(valor1); // Ordena de mayor a menor
             }
         });
@@ -155,6 +151,13 @@ public class GestorReporte {
         this.fechaHasta = fechaHasta;
     }
 
+    public String[] getTipoResenia() {
+        return tipoResenia;
+    }
+
+    public void setTipoResenia(String[] tipoResenia) {
+        this.tipoResenia = tipoResenia;
+    }
 
     public void setTipoResenaSeleccionado(String tipoResenaSeleccionado) {
         this.tipoResenaSeleccionado = tipoResenaSeleccionado;

@@ -149,14 +149,14 @@ public class interfaces {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     frame.dispose();
-                    habilitarPantalla(gestor);
+                    habilitarPantalla(gestor); // habilitamos pantalla
                 }
             });
 
             mainPanel.add(screen1, "Screen1");
 
             frame.setVisible(true);
-            gestor.generarRankingDeVinos(this, vinos);
+            gestor.generarRankingDeVinos(this, vinos); // opcGenerarRankingVinos()
         }
 
         public void habilitarPantalla(GestorReporte gestor) {
@@ -255,11 +255,13 @@ public class interfaces {
             panelBody.add(btnAceptar);
 
             btnAceptar.addActionListener(e -> {
-                Date fechaDesde = tomarFechaDesde();
-                Date fechaHasta = tomarFechaHasta();
-                boolean validate = validarPeriodo(fechaDesde, fechaHasta);
+                Date fechaDesde = tomarFechaDesde(); // tomamos fechaDesde
+                Date fechaHasta = tomarFechaHasta(); // tomamos fechaHasta
 
-                gestor.tomarFechas(fechaDesde, fechaHasta, this);
+                gestor.tomarFechas(fechaDesde, fechaHasta, this); // tomamos fechas al gestor
+
+                boolean validate = validarPeriodo(fechaDesde, fechaHasta); // validamos periodo
+
                 synchronized (lock) {
                     lock.notify();
                 }
@@ -293,16 +295,19 @@ public class interfaces {
         public void solicitarSeleccionTipoReseña(GestorReporte gestor) {
             panelBody.removeAll();
 
-            String[] tipoResenia = {"Premium", "No Premium"};
+            String[] tipoResenia = gestor.getTipoResenia(); // buscarTipoResenia()
+
+            //String[] tipoResenia = {"Premium", "No Premium"};
+
             opciones = new JComboBox<>(tipoResenia);
 
             panelBody.add(lblOpcResenia);
-            lblOpcResenia.setForeground(Color.WHITE); // Establecer color de texto blanco
+            lblOpcResenia.setForeground(Color.WHITE);
             panelBody.add(opciones);
             panelBody.add(btnResenia);
 
             btnResenia.addActionListener(e -> {
-                String tipoResena = tomarSeleccionTipoResenia();
+                String tipoResena = tomarSeleccionTipoResenia(); // tomas la seleccion
                 gestor.tomarSeleccionTipoResenia(tipoResena, this);
             });
             panelBody.revalidate();
@@ -317,16 +322,17 @@ public class interfaces {
         public void solicitarSelecciónFormatoReporte(GestorReporte gestor) {
             panelBody.removeAll();
             // traigo tipos del gestor
-            String[] tipoVisualizaciones = gestor.getTipoVisualizaciones();
+            String[] tipoVisualizaciones = gestor.getTipoVisualizaciones(); // buscarFormatoReporte();
+
             opciones = new JComboBox<>(tipoVisualizaciones);
 
             panelBody.add(lblVisualizacion);
-            lblVisualizacion.setForeground(Color.WHITE); // Establecer color de texto blanco
+            lblVisualizacion.setForeground(Color.WHITE);
             panelBody.add(opciones);
             panelBody.add(btnTipoVisualizacion);
 
             btnTipoVisualizacion.addActionListener(e -> {
-                String tipoVisualizacion = tomarSelecciónFormatoReporte();
+                String tipoVisualizacion = tomarSelecciónFormatoReporte(); // tomar las seleccion
                 gestor.tomarSelecciónFormatoReporte(tipoVisualizacion, this);
             });
             panelBody.revalidate();
