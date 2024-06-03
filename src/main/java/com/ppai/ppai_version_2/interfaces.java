@@ -220,6 +220,31 @@ public class interfaces {
             JDatePanelImpl datePanelHasta = new JDatePanelImpl(modelHasta, pHasta);
             datePickerHasta = new JDatePickerImpl(datePanelHasta, new DateLabelFormatter());
 
+            datePickerDesde.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Date selectedDate = (Date) datePickerDesde.getModel().getValue();
+                    System.out.println("Fecha Desde seleccionada: " + selectedDate);
+                    try {
+                        datePickerDesde.getJFormattedTextField().setText(new DateLabelFormatter().valueToString(selectedDate));
+                    } catch (ParseException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+            datePickerHasta.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Date selectedDate = (Date) datePickerHasta.getModel().getValue();
+                    System.out.println("Fecha Hasta seleccionada: " + selectedDate);
+                    try {
+                        datePickerHasta.getJFormattedTextField().setText(new DateLabelFormatter().valueToString(selectedDate));
+                    } catch (ParseException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+
             // agrego al body
             panelBody.add(lblTextFechaDesde);
             lblTextFechaDesde.setForeground(Color.WHITE); // Establecer color de texto blanco
