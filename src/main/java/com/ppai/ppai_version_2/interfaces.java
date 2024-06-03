@@ -19,6 +19,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.SqlDateModel;
+import org.jdatepicker.impl.UtilDateModel;
 
 public class interfaces {
     public static class InterfazExcel {
@@ -74,8 +80,10 @@ public class interfaces {
         }
     }
 
+
+
     public static class PantRankingVinos extends JFrame {
-        
+
         private final Object lock = new Object();
 
         // paneles
@@ -94,8 +102,8 @@ public class interfaces {
         private JButton btnConfirmar = new JButton("Confirmar");
 
         // fechas - campos
-        private JTextField lblFechaDesde = new JTextField("01-01-2000", 20);
-        private JTextField lblFechaHasta = new JTextField("01-01-2024", 20);
+        private JDatePickerImpl datePickerDesde;
+        private JDatePickerImpl datePickerHasta;
         private JLabel lblTextFechaDesde = new JLabel("Fecha Desde: ");
         private JLabel lblTextFechaHasta = new JLabel("Fecha Hasta: ");
 
@@ -103,7 +111,6 @@ public class interfaces {
         private JLabel lblOpcResenia = new JLabel("Seleccione un Tipo de Reseña: ");
         private JLabel lblVisualizacion = new JLabel("Seleccionar Tipo de Visualización: ");
         private JLabel lblGeneracionExitosa = new JLabel("Reporte Generado exitosamente!");
-
 
         // Métodos de Pantalla
         public void opcionGenerarRankingDeVinos(GestorReporte gestor, ArrayList<Vino> vinos) {
@@ -120,14 +127,14 @@ public class interfaces {
                 protected void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     // Cargar la imagen desde el archivo (asegúrate de tener la imagen en la ruta correcta)
-                    ImageIcon image = new ImageIcon("tp_dsi_version2\\Imagen\\Captura de pantalla 2024-05-30 224701.png");
+                    ImageIcon image = new ImageIcon("src/main/java/com/ppai/ppai_version_2/Imagen/Captura de pantalla 2024-05-30 224701.png");
                     // Dibujar la imagen en el panel
                     g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
                 }
             };
 
             screen1.setLayout(new GridBagLayout());
-            
+
 
             // Añadir el botón para cambiar a la segunda pantalla
             JButton toScreen2Button = new JButton("Generar Ranking de vinos");
@@ -196,13 +203,30 @@ public class interfaces {
         }
 
         public void solicitarSeleccionFechas(GestorReporte gestor) {
+            // Configuración del date picker
+            UtilDateModel modelDesde = new UtilDateModel();
+            Properties pDesde = new Properties();
+            pDesde.put("text.today", "Today");
+            pDesde.put("text.month", "Month");
+            pDesde.put("text.year", "Year");
+            JDatePanelImpl datePanelDesde = new JDatePanelImpl(modelDesde, pDesde);
+            datePickerDesde = new JDatePickerImpl(datePanelDesde, new DateLabelFormatter());
+
+            UtilDateModel modelHasta = new UtilDateModel();
+            Properties pHasta = new Properties();
+            pHasta.put("text.today", "Today");
+            pHasta.put("text.month", "Month");
+            pHasta.put("text.year", "Year");
+            JDatePanelImpl datePanelHasta = new JDatePanelImpl(modelHasta, pHasta);
+            datePickerHasta = new JDatePickerImpl(datePanelHasta, new DateLabelFormatter());
+
             // agrego al body
             panelBody.add(lblTextFechaDesde);
             lblTextFechaDesde.setForeground(Color.WHITE); // Establecer color de texto blanco
-            panelBody.add(lblFechaDesde);
+            panelBody.add(datePickerDesde);
             panelBody.add(lblTextFechaHasta);
             lblTextFechaHasta.setForeground(Color.WHITE); // Establecer color de texto blanco
-            panelBody.add(lblFechaHasta);
+            panelBody.add(datePickerHasta);
             panelBody.add(btnAceptar);
 
             btnAceptar.addActionListener(e -> {
@@ -225,27 +249,11 @@ public class interfaces {
         }
 
         public Date tomarFechaDesde() {
-            String fechaTexto = lblFechaDesde.getText();
-            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-            try {
-                Date fecha = formato.parse(fechaTexto);
-                return fecha;
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null;
-            }
+            return (Date) datePickerDesde.getModel().getValue();
         }
 
         public Date tomarFechaHasta() {
-            String fechaTexto = lblFechaHasta.getText();
-            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-            try {
-                Date fecha = formato.parse(fechaTexto);
-                return fecha;
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null; //
-            }
+            return (Date) datePickerHasta.getModel().getValue();
         }
 
         public boolean validarPeriodo(Date fechaDesde, Date fechaHasta) {
@@ -322,6 +330,7 @@ public class interfaces {
             JOptionPane.showMessageDialog(panelBody, "Generación exitosa", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             setLocation(0,0);
         }
-        
+
     }
+
 }
