@@ -69,6 +69,9 @@ public class GestorReporte {
 
         // Generar el Excel con los datos ordenados
         interfaces.InterfazExcel excel = new interfaces.InterfazExcel(); // instancia
+        excel.generarExcel(this.list10MejoresVinos); // se genera el excel. Se usa la interfaz
+
+        // se generar el mensaje de reporte exitoso
         pantalla.mostrarGeneracionExitosa();
 
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -76,7 +79,6 @@ public class GestorReporte {
             pantalla.dispose();
         }, 1, TimeUnit.SECONDS);
 
-        excel.generarExcel(this.list10MejoresVinos); // se genera el excel. Se usa la interfaz
         executorService.shutdown();
     }
 

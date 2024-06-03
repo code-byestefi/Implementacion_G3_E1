@@ -298,7 +298,7 @@ public class MainApplication {
         pantalla.setVisible(true);
 
         GestorReporte gestor = new GestorReporte();
-        pantalla.opcionGenerarRankingDeVinos(gestor, vinos);
+        pantalla.opcionGenerarRankingDeVinos(gestor, vinos); // empieza el flujo
 
 
 
