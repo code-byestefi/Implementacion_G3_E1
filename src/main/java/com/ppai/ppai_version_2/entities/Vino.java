@@ -1,24 +1,44 @@
 package com.ppai.ppai_version_2.entities;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "vino") // Nombre de la tabla en la base de datos
 public class Vino {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "anio")
     private int anio;
+
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+
+    @Column(name = "nota_cata_bodega")
     private String notaCataBodega;
+
+    @Column(name = "precio")
     private double precio;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bodega",nullable = true) // Nombre de la columna de clave foránea
     private Bodega bodega;
-    private ArrayList<Resenia> resenas;
+
+    @OneToMany(mappedBy = "vino", cascade = CascadeType.ALL)
+    private List<Resenia> resenas;
+
+    @ManyToOne
+    @JoinColumn(name = "varietal") // Nombre de la columna de clave foránea
     private Varietal varietal;
-
-    //METODOS
-
-    //Constructor
-    public Vino(int anio, String nombre, String notaCataBodega, double precio,Bodega bodega, ArrayList<Resenia> resenas, Varietal varietal) {
+    public Vino(){}
+    // Constructor
+    public Vino(int anio, String nombre, String notaCataBodega, double precio, Bodega bodega, List<Resenia> resenas, Varietal varietal) {
         this.anio = anio;
         this.nombre = nombre;
         this.notaCataBodega = notaCataBodega;
@@ -28,6 +48,7 @@ public class Vino {
         this.varietal = varietal;
     }
 
+    // Getters y Setters
     public int getAnio() {
         return anio;
     }
@@ -60,11 +81,11 @@ public class Vino {
         this.precio = precio;
     }
 
-    public ArrayList<Resenia> getResenas() {
+    public List<Resenia> getResenas() {
         return resenas;
     }
 
-    public void setResenas(ArrayList<Resenia> resenas) {
+    public void setResenas(List<Resenia> resenas) {
         this.resenas = resenas;
     }
 
@@ -84,36 +105,15 @@ public class Vino {
         this.varietal = varietal;
     }
 
-    public boolean buscarVinosConResenia(Date fechaDesde, Date fechaHasta) {
-        for (int i = 0; i < resenas.size(); i++){
-            boolean tenesResenasPeriodo = resenas.get(i).sosDeFecha(fechaDesde, fechaHasta);
-            boolean sosDeSommelier = resenas.get(i).sosDeSommelier();
-            if(tenesResenasPeriodo && sosDeSommelier)
-            {
-                return true;
-            }
-        }
-        return false;
+    public boolean tenesResenas(){
+        if(this.resenas.size()== 0){
+            return false;
+        } else { return true;}
     }
 
-    public double calcularRanking(Date fechaDesde, Date fechaHasta){
-        ArrayList<Double> puntajes = new ArrayList<>();
-
-        for (int i = 0; i< resenas.size(); i++){
-            boolean sosDePeriodo = resenas.get(i).sosDeFecha(fechaDesde, fechaHasta);
-            boolean sosDeSommelier = resenas.get(i).sosDeSommelier();
-            if (sosDePeriodo && sosDeSommelier){
-                puntajes.add(resenas.get(i).getPuntaje());
-            }
-        }
-        double promedio = calcularPromedio(puntajes);
-
-        return promedio;
-    }
-
-    public double calcularPromedio(ArrayList<Double> lista) {
+    public double calcularCalificacionPromedio(ArrayList<Double> lista) {
         if (lista == null || lista.isEmpty()) {
-            return 0;  // Retornar 0 si la lista es nula o está vacía
+            return 0; // Retornar 0 si la lista es nula o está vacía
         }
         double suma = 0;
         for (double numero : lista) {
@@ -122,11 +122,10 @@ public class Vino {
         return suma / lista.size();
     }
 
-
-    public ArrayList<String> getDatosBodega(){
-        ArrayList<String> lista = new ArrayList<>();
+    public List<String> getDatosBodega() {
+        List<String> lista = new ArrayList<>();
         String nombreBodega = bodega.getNombre();
-        ArrayList<String> regionYPais = bodega.getPaisRegion();
+        List<String> regionYPais = bodega.getPaisRegion();
 
         lista.add(nombreBodega);
         lista.addAll(regionYPais);

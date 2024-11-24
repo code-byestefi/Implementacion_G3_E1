@@ -1,22 +1,31 @@
 package com.ppai.ppai_version_2.entities;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "bodega") // Nombre de la tabla en la base de datos
 public class Bodega {
-    //Agregar atributos
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generación automática de ID
+    @Column(name = "id") // Nombre de la columna de ID
+    private Long id;
+
+    @Column(name = "nombre") // Nombre de la columna en la base de datos
     private String nombre;
+
+    @ManyToOne(fetch = FetchType.LAZY) // Relación con la clase Region (muchos bodegas pueden tener una región)
+    @JoinColumn(name = "region") // Columna que almacena la relación con la tabla Region
     private Region region;
-    private String periodoActualizacion;
-    private String coordenadasUbicacion;
+
+    @Column(name = "descripcion")
     private String descripcion;
-    private String historia;
 
     public Bodega(String coordenadasUbicacion, String descripcion, String historia, String nombre, String periodoActualizacion, Region region) {
-        this.coordenadasUbicacion = coordenadasUbicacion;
         this.descripcion = descripcion;
-        this.historia = historia;
         this.nombre = nombre;
-        this.periodoActualizacion = periodoActualizacion;
         this.region = region;
     }
 
@@ -25,13 +34,15 @@ public class Bodega {
         this.nombre = nombre;
         this.region = region;
     }
+    public Bodega(){}
+    // Getters y setters
 
-    public String getCoordenadasUbicacion() {
-        return coordenadasUbicacion;
+    public Long getId() {
+        return id;
     }
 
-    public void setCoordenadasUbicacion(String coordenadasUbicacion) {
-        this.coordenadasUbicacion = coordenadasUbicacion;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescripcion() {
@@ -42,24 +53,8 @@ public class Bodega {
         this.descripcion = descripcion;
     }
 
-    public String getHistoria() {
-        return historia;
-    }
-
-    public void setHistoria(String historia) {
-        this.historia = historia;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getPeriodoActualizacion() {
-        return periodoActualizacion;
-    }
-
-    public void setPeriodoActualizacion(String periodoActualizacion) {
-        this.periodoActualizacion = periodoActualizacion;
     }
 
     public Region getRegion() {
@@ -74,11 +69,11 @@ public class Bodega {
         this.region = region;
     }
 
-    public ArrayList<String> getPaisRegion() {
+    public List<String> getPaisRegion() {
         ArrayList<String> regionYPais = new ArrayList<>();
         String region = this.region.getNombre();
-        String provincia = this.region.getProvincia().getNombre();
-        String pais = this.region.obtenerPais();
+        String provincia =this.region.getProvincia().getNombre();
+        String pais = this.region.getProvincia().getPais().getNombre();
 
         regionYPais.add(region);
         regionYPais.add(pais);

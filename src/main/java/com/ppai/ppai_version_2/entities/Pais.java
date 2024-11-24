@@ -1,29 +1,51 @@
 package com.ppai.ppai_version_2.entities;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import java.util.List;
 
+@Entity
+@Table(name = "pais")
 public class Pais {
 
-    private String nombre;
-    private ArrayList<Provincia> provincias;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-    public Pais(String nombre, ArrayList<Provincia> provincias) {
-        this.nombre = nombre;
-        this.provincias = provincias;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+
+    @OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
+    private List<Provincia> provincias;
+
+    public Pais() {
     }
-    public Pais(String name) {
-        this.nombre = name;
+    public Pais(String nombre) {
+        this.nombre = nombre;
+    }
+
+    // Getters y setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
-    public ArrayList<Provincia> getProvincias() {
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public List<Provincia> getProvincias() {
         return provincias;
     }
-    public void setProvincias(ArrayList<Provincia> provincias) {
+
+    public void setProvincias(List<Provincia> provincias) {
         this.provincias = provincias;
     }
-
 }

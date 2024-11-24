@@ -26,6 +26,14 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 import org.jdatepicker.impl.UtilDateModel;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.*;
+
 public class interfaces {
     public static class InterfazExcel {
 
@@ -81,6 +89,73 @@ public class interfaces {
 
 
 
+
+public static class InterfazPDF {
+
+    public void generarPDF(List<List<Object>> datosVinos) {
+        try {
+            // Ruta del archivo PDF
+            String pdfPath = "10-ranking-Vinos.pdf";
+
+            // Crear escritor y documento PDF
+            PdfWriter writer = new PdfWriter(new FileOutputStream(pdfPath));
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            // Agregar título
+            Paragraph titulo = new Paragraph("Ranking de los mejores 10 vinos con reseña de sommelier")
+                    .setTextAlignment(TextAlignment.CENTER) // Centrar el texto
+                    .setFontSize(18) // Tamaño de fuente
+                    .setBold(); // Texto en negrita
+            document.add(titulo);
+
+            // Espaciado entre el título y la tabla
+            document.add(new Paragraph("\n")); // Línea en blanco
+            // Crear tabla con 9 columnas
+            float[] columnWidths = {1, 3, 3, 3, 3, 3, 3, 3, 3};
+            Table table = new Table(columnWidths);
+
+            
+            // Encabezados
+            table.addCell(new Cell().add(new Paragraph("Posición")));
+            table.addCell(new Cell().add(new Paragraph("Nombre")));
+            table.addCell(new Cell().add(new Paragraph("Calificación General")));
+            table.addCell(new Cell().add(new Paragraph("Calificación Sommelier")));
+            table.addCell(new Cell().add(new Paragraph("Precio Sugerido")));
+            table.addCell(new Cell().add(new Paragraph("Bodega")));
+            table.addCell(new Cell().add(new Paragraph("Región")));
+            table.addCell(new Cell().add(new Paragraph("País")));
+            table.addCell(new Cell().add(new Paragraph("Provincia")));
+
+            // Filas de datos
+            for (int i = 0; i < datosVinos.size(); i++) {
+                List<Object> vino = datosVinos.get(i);
+
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(i + 1)))); // Posición
+                table.addCell(new Cell().add(new Paragraph(vino.get(1).toString()))); // Nombre
+                table.addCell(new Cell().add(new Paragraph("7"))); // Calificación General (fijo)
+                table.addCell(new Cell().add(new Paragraph(vino.get(0).toString()))); // Calificación Sommelier
+                table.addCell(new Cell().add(new Paragraph(vino.get(2).toString()))); // Precio Sugerido
+                table.addCell(new Cell().add(new Paragraph(vino.get(3).toString()))); // Bodega
+                table.addCell(new Cell().add(new Paragraph(vino.get(4).toString()))); // Región
+                table.addCell(new Cell().add(new Paragraph(vino.get(5).toString()))); // País
+                table.addCell(new Cell().add(new Paragraph(vino.get(6).toString()))); // Provincia
+            }
+
+            // Agregar tabla al documento
+            document.add(table);
+
+            // Cerrar documento
+            document.close();
+
+            System.out.println("PDF generado en: " + pdfPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
     public static class PantRankingVinos extends JFrame {
 
         private final Object lock = new Object();
@@ -112,7 +187,7 @@ public class interfaces {
         private JLabel lblGeneracionExitosa = new JLabel("Reporte Generado exitosamente!");
 
         // Métodos de Pantalla
-        public void opcionGenerarRankingDeVinos(GestorReporte gestor, ArrayList<Vino> vinos) {
+        public void opcionGenerarRankingDeVinos(GestorReporte gestor, List<Vino> vinos) {
             JFrame frame = new JFrame("Generación de reportes de Vinos - Ranking de Calificaciones");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 600);
@@ -126,7 +201,7 @@ public class interfaces {
                 protected void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     // Cargar la imagen desde el archivo (asegúrate de tener la imagen en la ruta correcta)
-                    ImageIcon image = new ImageIcon("src/main/java/com/ppai/ppai_version_2/Imagen/Captura de pantalla 2024-05-30 224701.png");
+                    ImageIcon image = new ImageIcon("C:/Users/marti/OneDrive/Escritorio/PPAI Diseño/Implementacion_G3_E1/src/main/java/com/ppai/ppai_version_2/Imagen/Captura de pantalla 2024-05-30 224701.png");
                     // Dibujar la imagen en el panel
                     g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
                 }
@@ -296,7 +371,7 @@ public class interfaces {
 
             String[] tipoResenia = gestor.getTipoResenia(); // buscarTipoResenia()
 
-            //String[] tipoResenia = {"Premium", "No Premium"};
+            //String[] tipoResenia = {"Reseñas normales", "Reseñas de Sommelier","Reseñas de Amigos"};
 
             opciones = new JComboBox<>(tipoResenia);
 
