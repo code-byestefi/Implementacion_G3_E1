@@ -3,12 +3,8 @@ package com.ppai.ppai_version_2;
 import com.ppai.ppai_version_2.controller.GestorReporte;
 import com.ppai.ppai_version_2.entities.*;
 
-
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -38,6 +34,7 @@ public class MainApplication {
             for (Resenia resenia : resenias) {
                 System.out.println("Reseña: " + resenia.getComentario()+" al vino " + resenia.getVino().getNombre() + " cuyo puntaje es " + resenia.getPuntaje() + " hecho en " + resenia.getFechaResena());
             }
+            
             interfaces.PantRankingVinos pantalla = new interfaces.PantRankingVinos();
             pantalla.setVisible(true);
     

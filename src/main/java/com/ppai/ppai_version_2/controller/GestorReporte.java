@@ -151,51 +151,6 @@ public class GestorReporte {
 
     private void buscarDatosMejoresVinos(List<List<Object>> list10MejoresVinos) {
     this.list10MejoresVinos = new ArrayList<>();
-    Session session = hibernateutil.getSession();
-    try {
-        
-        // Consultas HQL para obtener las listas
-        List<Vino> vinos = session.createQuery("FROM Vino", Vino.class).list();
-        List<Resenia> resenias = session.createQuery("FROM Resenia", Resenia.class).list();
-        List<Bodega> bodegas = session.createQuery("FROM Bodega", Bodega.class).list();
-        List<Pais> paises = session.createQuery("FROM Pais", Pais.class).list();
-        List<Provincia> provincias = session.createQuery("FROM Provincia", Provincia.class).list();
-        List<Varietal> varietales = session.createQuery("FROM Varietal", Varietal.class).list();
-        List<Region> regiones = session.createQuery("FROM Region", Region.class).list();
-
-        // Inicializar colecciones perezosas (como 'resenas') antes de cerrar la sesión
-        
-        // Inicialización y comprobación de nulos
-        for (Pais p : paises){
-            Hibernate.initialize(p.getNombre());
-            System.out.println(p.getNombre());
-        }
-        for (Region r : regiones) {
-            Hibernate.initialize(r.getProvincia());
-            Hibernate.initialize(r.getNombre());
-            System.out.println(r.getNombre());
-        }
-        for (Provincia p : provincias) {
-            Hibernate.initialize(p.obtenerPais());
-            Hibernate.initialize(p.getNombre());
-            System.out.println(p.getNombre());
-        }
-        
-        for (Bodega b: bodegas){
-            System.out.println(b.getNombre());
-            Hibernate.initialize(b.getRegion());
-            Hibernate.initialize(b.getPaisRegion());
-        }
-        for (Vino vino : vinos) {
-            Hibernate.initialize(vino.getResenas());
-            Hibernate.initialize(vino.getBodega());
-
-        }
-        for (Varietal v : varietales){
-            System.out.println(v.getNombre());
-            Hibernate.initialize(v.getNombre());
-        }
-
         // Procesar los datos de los mejores vinos
         for (List<Object> datosVino : list10MejoresVinos) {
             double promedio = (double) datosVino.get(0);
@@ -215,13 +170,6 @@ public class GestorReporte {
 
             this.list10MejoresVinos.add(datosVinoCompletos);
         }
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        // Cerrar la sesión
-        hibernateutil.closeSession(session);
-    }
 }
 
 
