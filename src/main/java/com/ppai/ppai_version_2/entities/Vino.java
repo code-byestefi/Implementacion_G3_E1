@@ -33,7 +33,7 @@ public class Vino {
     @OneToMany(mappedBy = "vino", cascade = CascadeType.ALL)
     private List<Resenia> resenas;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "varietal") // Nombre de la columna de clave foránea
     private Varietal varietal;
     public Vino(){}

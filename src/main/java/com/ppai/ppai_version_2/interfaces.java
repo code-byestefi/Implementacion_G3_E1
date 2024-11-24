@@ -53,10 +53,11 @@ public class interfaces {
             row0.createCell(2).setCellValue("Calificación General");
             row0.createCell(3).setCellValue("Calificación Sommelier");
             row0.createCell(4).setCellValue("Precio Sugerido");
-            row0.createCell(5).setCellValue("Bodega");
-            row0.createCell(6).setCellValue("Región");
-            row0.createCell(7).setCellValue("País");
-            row0.createCell(8).setCellValue("Provincia");
+            row0.createCell(5).setCellValue("Varietal");
+            row0.createCell(6).setCellValue("Bodega");
+            row0.createCell(7).setCellValue("Región");
+            row0.createCell(8).setCellValue("País");
+          
 
 
             for (int i = 0; i < datosVinos.size(); i++) {
@@ -121,10 +122,10 @@ public static class InterfazPDF {
             table.addCell(new Cell().add(new Paragraph("Calificación General")));
             table.addCell(new Cell().add(new Paragraph("Calificación Sommelier")));
             table.addCell(new Cell().add(new Paragraph("Precio Sugerido")));
+            table.addCell(new Cell().add(new Paragraph("Varietal")));
             table.addCell(new Cell().add(new Paragraph("Bodega")));
             table.addCell(new Cell().add(new Paragraph("Región")));
-            table.addCell(new Cell().add(new Paragraph("País")));
-            table.addCell(new Cell().add(new Paragraph("Provincia")));
+            table.addCell(new Cell().add(new Paragraph("Pais")));
 
             // Filas de datos
             for (int i = 0; i < datosVinos.size(); i++) {
@@ -136,9 +137,9 @@ public static class InterfazPDF {
                 table.addCell(new Cell().add(new Paragraph(vino.get(0).toString()))); // Calificación Sommelier
                 table.addCell(new Cell().add(new Paragraph(vino.get(2).toString()))); // Precio Sugerido
                 table.addCell(new Cell().add(new Paragraph(vino.get(3).toString()))); // Bodega
-                table.addCell(new Cell().add(new Paragraph(vino.get(4).toString()))); // Región
-                table.addCell(new Cell().add(new Paragraph(vino.get(5).toString()))); // País
-                table.addCell(new Cell().add(new Paragraph(vino.get(6).toString()))); // Provincia
+                table.addCell(new Cell().add(new Paragraph(vino.get(4).toString()))); // Varietal
+                table.addCell(new Cell().add(new Paragraph(vino.get(5).toString()))); // Region
+                table.addCell(new Cell().add(new Paragraph(vino.get(6).toString()))); // País
             }
 
             // Agregar tabla al documento

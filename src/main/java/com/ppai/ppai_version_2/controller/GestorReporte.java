@@ -159,6 +159,7 @@ public class GestorReporte {
 
             double precio = vino.getPrecio();
             List<String> infoBodega = vino.getDatosBodega();
+            String varietal = vino.getVarietal().getNombre();
             System.out.println("Info traida de Bodega para el vino " + nombre + ": " + infoBodega);
 
             // Crear una lista con los datos completos
@@ -166,6 +167,7 @@ public class GestorReporte {
             datosVinoCompletos.add(promedio);
             datosVinoCompletos.add(nombre);
             datosVinoCompletos.add(precio);
+            datosVinoCompletos.add(varietal);
             datosVinoCompletos.addAll(infoBodega);
 
             this.list10MejoresVinos.add(datosVinoCompletos);
