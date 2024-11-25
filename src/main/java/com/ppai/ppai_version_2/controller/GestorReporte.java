@@ -86,7 +86,7 @@ public class GestorReporte {
         setConfirmacion(true);
 
         // Ejecutar búsqueda de vinos con reseñas y ordenarlos
-        buscarVinosConResenia(this.vinos, pantalla);
+        buscarVinosConResenia();
         ordenarVinosPorRanking();
 
         if(tipoVisualizacionSeleccionado == "Excel"){
@@ -111,9 +111,9 @@ public class GestorReporte {
         executorService.shutdown();
     }
 
-    public void buscarVinosConResenia(List<Vino> vinos, interfaces.PantRankingVinos pantalla) {
+    public void buscarVinosConResenia() {
         vinosEnElArray.clear();
-        this.vinosEnElArray = this.estrategia.buscarVinosConResenia(this.fechaDesde, this.fechaHasta, vinos);
+        this.vinosEnElArray = this.estrategia.buscarVinosConResenia(this.fechaDesde, this.fechaHasta, this.vinos);
     }
 
     public void ordenarVinosPorRanking() {
